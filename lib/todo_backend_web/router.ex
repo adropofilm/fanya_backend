@@ -20,6 +20,8 @@ defmodule TodoBackendWeb.Router do
     get "/", PageController, :index
   end
 
+  resources "/tasks", TaskController
+
   # Other scopes may use custom stacks.
   # scope "/api", TodoBackendWeb do
   #   pipe_through :api
