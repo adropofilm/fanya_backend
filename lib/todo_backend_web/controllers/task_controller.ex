@@ -11,7 +11,7 @@ defmodule TodoBackendWeb.TaskController do
     render(conn, "index.json", tasks: tasks)
   end
 
-  def create(conn, %{"task" => task_params}) do
+  def create(conn, task_params) do
     with {:ok, %Task{} = task} <- Functions.create_task(task_params) do
       conn
       |> put_status(:created)
