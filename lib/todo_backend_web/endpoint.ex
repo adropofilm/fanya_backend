@@ -46,5 +46,10 @@ defmodule TodoBackendWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Corsica,
+    origins: Application.get_env(:todo_backend, :origins),
+    log: [rejected: :error, invalid: :warn, accepted: :debug],
+    allow_headers: ["content-type"]
   plug TodoBackendWeb.Router
+
 end
