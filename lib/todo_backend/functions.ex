@@ -4,21 +4,21 @@ defmodule TodoBackend.Functions do
   """
 
   import Ecto.Query, warn: false
+  alias Mix.Tasks
   alias TodoBackend.Repo
 
   alias TodoBackend.Functions.Task
 
   @doc """
-  Returns the list of tasks.
+  Returns the list of tasks ordered by created_at date.
 
   ## Examples
 
       iex> list_tasks()
       [%Task{}, ...]
-
   """
   def list_tasks do
-    Repo.all(Task)
+    Task |> order_by_desc_date() |> Repo.all()
   end
 
   @doc """
@@ -101,4 +101,10 @@ defmodule TodoBackend.Functions do
   def change_task(%Task{} = task, attrs \\ %{}) do
     Task.changeset(task, attrs)
   end
+
+  defp order_by_desc_date(query) do
+    query
+    |> order_by([t], desc: t.inserted_at)
+  end
+
 end
