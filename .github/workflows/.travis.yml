@@ -1,17 +1,10 @@
-# install gigalixir-cli
-sudo apt-get install -y python3 python3-pip
-pip3 install gigalixir
-
-# deploy
-gigalixir login -e "$GIGALIXIR_EMAIL" -p "$GIGALIXIR_PASSWORD" -y
-gigalixir git:remote $GIGALIXIR_APP_NAME
-git push -f gigalixir HEAD:refs/heads/master
-# some code to wait for new release to go live
-
-# set up ssh so we can migrate
-mkdir ~/.ssh
-printf "Host *\n StrictHostKeyChecking no" > ~/.ssh/config
-echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-
-# migrate
-gigalixir ps:migrate -a $GIGALIXIR_APP_NAME
+script:
+  - git remote add gigalixir https://$GIGALIXIR_EMAIL:$GIGALIXIR_API_KEY@git.gigalixir.com/$GIGALIXIR_APP_NAME.git
+  - mix test && git push -f gigalixir HEAD:refs/heads/master
+language: elixir
+elixir: 1.5.1
+otp_release: 20.0
+services:
+  - postgresql
+before_script:
+  - PGPASSWORD=postgres psql -c 'create database gigalixir_getting_started_test;' -U postgres
