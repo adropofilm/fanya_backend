@@ -20,7 +20,9 @@ defmodule TodoBackendWeb.Router do
     get "/", PageController, :index
   end
 
-  resources "/tasks", TodoBackendWeb.TaskController
+  resources "/tasks", TodoBackendWeb.TaskController, except: [:update]
+
+  put "/tasks",  TodoBackendWeb.TaskController, :update
 
   # Other scopes may use custom stacks.
   # scope "/api", TodoBackendWeb do
