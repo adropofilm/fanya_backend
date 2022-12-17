@@ -50,4 +50,4 @@ config :logger, level: :info
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
-config :todo_backend, origins: ["http://localhost:3000/", ~r{^https?://(.*.?)-adropofilm.vercel.app/$}]
+config :todo_backend, origins: ["http://localhost:3000", ~r{^https?://(.*.?)-adropofilm.vercel.app$}]
