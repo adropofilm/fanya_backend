@@ -25,8 +25,8 @@ defmodule TodoBackendWeb.TaskController do
     render(conn, "show.json", task: task)
   end
 
-  def update(conn, %{"id" => id, "task" => task_params}) do
-    task = Functions.get_task!(id)
+  def update(conn, task_params) do
+    task = Functions.get_task!(task_params["id"])
 
     with {:ok, %Task{} = task} <- Functions.update_task(task, task_params) do
       render(conn, "show.json", task: task)
