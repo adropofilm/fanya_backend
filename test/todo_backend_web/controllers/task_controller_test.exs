@@ -22,14 +22,14 @@ defmodule TodoBackendWeb.TaskControllerTest do
   describe "index" do
     test "lists all tasks", %{conn: conn} do
       conn = get(conn, Routes.task_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+      assert json_response(conn, 200) == []
     end
   end
 
   describe "create task" do
     test "renders task when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.task_path(conn, :create), task: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+      conn = post(conn, Routes.task_path(conn, :create), @create_attrs)
+      assert %{"id" => id} = json_response(conn, 201)
 
       conn = get(conn, Routes.task_path(conn, :show, id))
 
@@ -37,7 +37,7 @@ defmodule TodoBackendWeb.TaskControllerTest do
                "id" => ^id,
                "status" => "some status",
                "title" => "some title"
-             } = json_response(conn, 200)["data"]
+             } = json_response(conn, 200)
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -75,9 +75,9 @@ defmodule TodoBackendWeb.TaskControllerTest do
       conn = delete(conn, Routes.task_path(conn, :delete, task))
       assert response(conn, 204)
 
-      assert_error_sent 404, fn ->
+      assert_error_sent(404, fn ->
         get(conn, Routes.task_path(conn, :show, task))
-      end
+      end)
     end
   end
 

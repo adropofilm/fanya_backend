@@ -25,6 +25,7 @@ defmodule TodoBackendWeb.TaskController do
     render(conn, "show.json", task: task)
   end
 
+  @spec update(any, %{optional(:__struct__) => none, optional(atom | binary) => any}) :: any
   def update(conn, task_params) do
     task = Functions.get_task!(task_params["id"])
 
