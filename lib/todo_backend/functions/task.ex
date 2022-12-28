@@ -3,7 +3,7 @@ defmodule TodoBackend.Functions.Task do
   import Ecto.Changeset
 
   schema "tasks" do
-    field :status, :string
+    field :status, :string, default: "open"
     field :title, :string
 
     timestamps()
@@ -13,6 +13,6 @@ defmodule TodoBackend.Functions.Task do
   def changeset(task, attrs) do
     task
     |> cast(attrs, [:title, :status])
-    |> validate_required([:title, :status])
+    |> validate_required([:title])
   end
 end
